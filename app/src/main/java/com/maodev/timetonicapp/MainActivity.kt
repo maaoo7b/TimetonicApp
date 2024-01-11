@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
                     color = Color(0xFFF0EBE6)
                 ) {
                     LoginPage()
-
                 }
             }
         }

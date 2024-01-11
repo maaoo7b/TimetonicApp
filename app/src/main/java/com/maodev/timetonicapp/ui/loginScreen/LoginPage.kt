@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -67,12 +68,11 @@ fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
             maxLines = 1,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = Color.LightGray,
-                focusedBorderColor = Color(0xFF8BC34A),
+                focusedBorderColor = Color(0xFF4CAF50),
                 containerColor = Color(0xFFECE5E5),
                 textColor = Color.Black
             )
         )
-
         OutlinedTextField(
             value = password,
             modifier = modifier
@@ -87,7 +87,7 @@ fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
                 focusedBorderColor = Color(0xFF8BC34A),
                 containerColor = Color(0xFFECE5E5),
                 textColor = Color.Black
-            )
+            ), visualTransformation = PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.size(16.dp))
 
@@ -103,7 +103,6 @@ fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
             )
         ) {
             Text(text = "LOGIN")
-
         }
     }
 

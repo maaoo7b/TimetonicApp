@@ -15,5 +15,4 @@ class LoginViewModel: ViewModel() {
         _email.value = email
         _password.value = password
     }
-
 }
