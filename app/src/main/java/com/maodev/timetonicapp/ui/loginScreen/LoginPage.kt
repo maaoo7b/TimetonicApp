@@ -105,5 +105,4 @@ fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
             Text(text = "LOGIN")
         }
     }
-
 }
