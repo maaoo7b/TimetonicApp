@@ -68,8 +68,11 @@ dependencies {
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    //Moshi (Json converter to Objects).
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    //Gson (Json converter to Objects).
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
+    //Glide
+    implementation "com.github.bumptech.glide:compose:1.0.0-beta01"
+
 }

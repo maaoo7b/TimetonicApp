@@ -1,42 +1,50 @@
 package com.maodev.timetonicapp.ui.landingPage
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.maodev.timetonicapp.R
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.maodev.timetonicapp.data.model.books.BookMapper
+import com.maodev.timetonicapp.data.viewModel.GetAllBooksViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BooksGridView() {
+fun BooksGridView(viewModel: GetAllBooksViewModel) {
+    val state = viewModel.state
     Scaffold(topBar = { MyTopAppBar() }) {
-        Column(modifier = Modifier.padding(it)) {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), content = {
-                items(getBooks()) { booksito ->
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxWidth().background(Color(0xFFECE5E5))
+        ) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(1.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(state.book) { booksito ->
                     ItemBook(book = booksito)
                 }
-            })
+            }
         }
     }
 }
@@ -52,47 +60,37 @@ fun MyTopAppBar() {
             )
         },
         colors = TopAppBarDefaults.largeTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(12.dp)
+            containerColor =Color(0xFF8BC34A)
         )
     )
 }
 
-fun getBooks(): List<Book> {
-    return listOf(
-        Book("GG", "GG", R.drawable.ic_launcher_background),
-        Book("GG1", "GG1", R.drawable.ic_launcher_background),
-        Book("GG2", "GG2", R.drawable.ic_launcher_background),
-        Book("GG3", "GG3", R.drawable.ic_launcher_background),
-        Book("GG4", "GG4", R.drawable.ic_launcher_background),
-        Book("GG5", "GG5", R.drawable.ic_launcher_background),
-        Book("GG6", "GG6", R.drawable.ic_launcher_background)
-    )
-
-}
-
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ItemBook(book: Book) {
+fun ItemBook(book: BookMapper) {
     Card(
-        border = BorderStroke(2.dp, Color.Red),
+        border = BorderStroke(1.dp, Color.LightGray),
         modifier = Modifier
-            .fillMaxWidth()
             .padding(8.dp)
+            .fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(5.dp)
     ) {
-        Column() {
-            Image(
-                painter = painterResource(id = book.photo),
-                contentDescription = "BookImg",
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.Crop
+        Column(modifier = Modifier.fillMaxWidth().background(Color(0xFFECE5E5))) {
+            GlideImage(
+                model = book.img,
+                contentDescription = "Book cover",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth()
             )
             Text(
-                text = book.name,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Text(
-                text = book.realName,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                fontSize = 12.sp
+                text = book.title,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(8.dp),
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
             )
         }
     }
