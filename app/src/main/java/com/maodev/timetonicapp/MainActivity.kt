@@ -12,7 +12,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.maodev.timetonicapp.data.viewModel.GetAllBooksViewModel
-import com.maodev.timetonicapp.ui.landingPage.BooksGridView
 import com.maodev.timetonicapp.ui.loginScreen.LoginPage
 
 
@@ -32,7 +31,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(0xFFF0EBE6)
                 ) {
-
                     LoginPage()
                     //BooksGridView(viewModel)
                 }

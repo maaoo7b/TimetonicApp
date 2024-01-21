@@ -11,13 +11,18 @@ import com.maodev.timetonicapp.data.repository.BooksRepository
 import kotlinx.coroutines.launch
 
 class GetAllBooksViewModel(
-    private val repository: BooksRepository = BooksRepository(APIService.instance)
+    private val repository: BooksRepository = BooksRepository(APIService.instance),
 ) : ViewModel() {
     var state by mutableStateOf(BookState())
-    init{
+
+    init {
         viewModelScope.launch {
-            val appkey = repository.createAppkey()
-            println(appkey)
+            getAllBooks()
+        }
+
+    }
+    fun getAllBooks() {
+        viewModelScope.launch {
             state = state.copy(isLoading = true)
             repository.getAllBooks().onSuccess {
                 state = state.copy(book = it)

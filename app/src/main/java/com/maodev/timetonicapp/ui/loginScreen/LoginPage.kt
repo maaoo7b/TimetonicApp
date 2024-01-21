@@ -1,5 +1,6 @@
 package com.maodev.timetonicapp.ui.loginScreen
 
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -93,7 +94,7 @@ fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
 
         Button(
             onClick = {
-                //TODO send login and passwd
+                loginViewModel.createAuthkey(email, password)
             },
             shape = RoundedCornerShape(12.dp),
             modifier = modifier

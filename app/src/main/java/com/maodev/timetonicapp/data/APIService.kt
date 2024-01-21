@@ -3,6 +3,7 @@ package com.maodev.timetonicapp.data
 import com.maodev.timetonicapp.data.model.appkey.CreateAppkey
 import com.maodev.timetonicapp.data.model.authkey.CreateAuthKey
 import com.maodev.timetonicapp.data.model.books.APIResponse
+import com.maodev.timetonicapp.data.model.sesskey.CreateSesskey
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,10 +29,18 @@ interface APIService {
         @Query("appkey") appkey: String
     ): CreateAuthKey
 
-    @POST("live/api.php?version=6.49q/6.49&req=getAllBooks")
-    suspend fun getAllBooks(
-        @Query("u_c") u_c: String,
+    @POST("live/api.php?req=createSesskey")
+    suspend fun createSessionkey(
         @Query("o_u") o_u: String,
-        @Query("sesskey") sesskey: String,
-    ): APIResponse
+        @Query("u_c") u_c: String,
+        @Query("oauthkey") authkey: String
+    ): CreateSesskey
+
+
+@POST("live/api.php?version=6.49q/6.49&req=getAllBooks")
+suspend fun getAllBooks(
+    @Query("u_c") u_c: String,
+    @Query("o_u") o_u: String,
+    @Query("sesskey") sesskey: String,
+): APIResponse
 }
