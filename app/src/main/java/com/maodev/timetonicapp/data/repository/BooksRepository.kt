@@ -1,4 +1,4 @@
-package com.maodev.timetonicapp.data.model.repository
+package com.maodev.timetonicapp.data.repository
 
 import com.maodev.timetonicapp.data.APIService
 import com.maodev.timetonicapp.data.model.books.BookMapper
@@ -18,6 +18,11 @@ class BooksRepository(private val apiService: APIService) {
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    suspend fun createAppkey(): String {
+        val appkey = apiService.createAppkey().appkey
+        return appkey
     }
 
     private fun converter(ownerPrefs: OwnerPrefs): BookMapper {

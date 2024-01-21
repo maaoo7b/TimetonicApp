@@ -92,7 +92,9 @@ fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
         Spacer(modifier = Modifier.size(16.dp))
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                //TODO send login and passwd
+            },
             shape = RoundedCornerShape(12.dp),
             modifier = modifier
                 .width(320.dp)

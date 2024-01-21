@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maodev.timetonicapp.data.APIService
 import com.maodev.timetonicapp.data.BookState
-import com.maodev.timetonicapp.data.model.repository.BooksRepository
+import com.maodev.timetonicapp.data.repository.BooksRepository
 import kotlinx.coroutines.launch
 
 class GetAllBooksViewModel(
@@ -16,6 +16,8 @@ class GetAllBooksViewModel(
     var state by mutableStateOf(BookState())
     init{
         viewModelScope.launch {
+            val appkey = repository.createAppkey()
+            println(appkey)
             state = state.copy(isLoading = true)
             repository.getAllBooks().onSuccess {
                 state = state.copy(book = it)
