@@ -3,13 +3,16 @@ package com.maodev.timetonicapp.ui.landingPage
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,18 +34,26 @@ import com.maodev.timetonicapp.data.viewModel.GetAllBooksViewModel
 @Composable
 fun BooksGridView(viewModel: GetAllBooksViewModel) {
     val state = viewModel.state
-    Scaffold(topBar = { MyTopAppBar() }) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxWidth().background(Color(0xFFECE5E5))
-        ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(1.dp),
-                modifier = Modifier.fillMaxWidth()
+    if (state.isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    }
+    if (state.book.isNotEmpty()) {
+        Scaffold(topBar = { MyTopAppBar() }) {
+            Column(
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxWidth()
+                    .background(Color(0xFFECE5E5))
             ) {
-                items(state.book) { booksito ->
-                    ItemBook(book = booksito)
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(1.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(state.book) { booksito ->
+                        ItemBook(book = booksito)
+                    }
                 }
             }
         }
@@ -60,7 +71,7 @@ fun MyTopAppBar() {
             )
         },
         colors = TopAppBarDefaults.largeTopAppBarColors(
-            containerColor =Color(0xFF8BC34A)
+            containerColor = Color(0xFF8BC34A)
         )
     )
 }
@@ -75,7 +86,11 @@ fun ItemBook(book: BookMapper) {
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(5.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth().background(Color(0xFFECE5E5))) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFECE5E5))
+        ) {
             GlideImage(
                 model = book.img,
                 contentDescription = "Book cover",

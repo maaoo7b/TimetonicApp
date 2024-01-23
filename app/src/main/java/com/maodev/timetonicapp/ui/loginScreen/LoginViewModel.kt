@@ -15,12 +15,10 @@ class LoginViewModel(
     private val repository: BooksRepository = BooksRepository(APIService.instance)
 ) :
     ViewModel() {
-
     private val _email = MutableLiveData<String>()
     private val _password = MutableLiveData<String>()
     val email: LiveData<String> = _email
     val password: LiveData<String> = _password
-
     suspend fun createSesskey(authKey: CreateAuthKey): CreateSesskey {
         return repository.createSessionkey(authKey.oU, authKey.oU, authKey.oauthkey)
     }
@@ -29,7 +27,6 @@ class LoginViewModel(
         viewModelScope.launch {
             val authkey = repository.createAuthKey(email, password)
             createSesskey(authkey)
-            println(authkey)
         }
     }
 

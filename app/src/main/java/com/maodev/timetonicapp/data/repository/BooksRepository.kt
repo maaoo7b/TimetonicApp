@@ -8,12 +8,25 @@ import com.maodev.timetonicapp.data.model.sesskey.CreateSesskey
 
 class BooksRepository(private val apiService: APIService) {
 
-    suspend fun getAllBooks(): Result<List<BookMapper>> {
+    suspend fun getAllBooks(
+        ou: String, uc: String, sesskey: String
+    ): Result<List<BookMapper>> {
         return try {
             val response = apiService.getAllBooks(
-                "androiddeveloper",
-                "androiddeveloper",
-                "MDRy-pby6-Gnhn-D3W5-pnqA-DIk7-qVzQ"
+                ou, uc, sesskey
+            ).allBooks.books
+            val book = response.map { converter(it.ownerPrefs) }
+            Result.success(book)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun getAllBooks(
+    ): Result<List<BookMapper>> {
+        return try {
+            val response = apiService.getAllBooks(
+                "androiddeveloper", "androiddeveloper", "MDRy-pby6-Gnhn-D3W5-pnqA-DIk7-qVzQ"
             ).allBooks.books
             val book = response.map { converter(it.ownerPrefs) }
             Result.success(book)
@@ -29,8 +42,6 @@ class BooksRepository(private val apiService: APIService) {
 
     suspend fun createAuthKey(login: String, pwd: String): CreateAuthKey {
         val authkey = apiService.createAuthKey(login, pwd, createAppkey())
-        //val ou = apiService.createAuthKey(login, pwd, createAppkey()).oU
-        //val fields = arrayOf(authkey, ou)
         return authkey
     }
 

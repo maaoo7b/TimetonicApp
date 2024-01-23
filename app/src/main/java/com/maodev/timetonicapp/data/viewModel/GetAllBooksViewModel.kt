@@ -19,8 +19,8 @@ class GetAllBooksViewModel(
         viewModelScope.launch {
             getAllBooks()
         }
-
     }
+
     fun getAllBooks() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)

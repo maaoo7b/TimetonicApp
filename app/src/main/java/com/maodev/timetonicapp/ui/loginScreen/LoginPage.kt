@@ -21,13 +21,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.maodev.timetonicapp.data.model.Routes
 
 @Composable
-fun LoginPage() {
+fun LoginPage(navigationController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -35,7 +38,7 @@ fun LoginPage() {
 
     ) {
 
-        Header(Modifier.align(Alignment.Center), LoginViewModel())
+        Body(Modifier.align(Alignment.Center), LoginViewModel(), navigationController)
 
     }
 
@@ -43,7 +46,11 @@ fun LoginPage() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
+fun Body(
+    modifier: Modifier,
+    loginViewModel: LoginViewModel,
+    navigationController: NavHostController
+) {
 
     val email: String by loginViewModel.email.observeAsState("")
     val password: String by loginViewModel.password.observeAsState("")
@@ -91,10 +98,10 @@ fun Header(modifier: Modifier, loginViewModel: LoginViewModel) {
             ), visualTransformation = PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.size(16.dp))
-
         Button(
             onClick = {
                 loginViewModel.createAuthkey(email, password)
+                navigationController.navigate(Routes.LandingPage.route)
             },
             shape = RoundedCornerShape(12.dp),
             modifier = modifier
